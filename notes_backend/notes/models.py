@@ -2,6 +2,7 @@ from django.db import models
 from django.utils.text import slugify
 from django.utils.crypto import get_random_string
 # Create your models here.
+
 class Note(models.Model):
     class CategoryChoices(models.TextChoices):
         BUSINESS = 'BUSINESS','Business'
@@ -10,7 +11,7 @@ class Note(models.Model):
 
     title = models.CharField(max_length=100)
     body = models.TextField()
-    slug = models.SlugField(unique=True)
+    slug = models.SlugField(unique=True, blank=True, null = True)
     category = models.CharField(max_length=50, choices= CategoryChoices.choices, default=CategoryChoices.PERSONAL)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
