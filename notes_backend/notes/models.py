@@ -24,7 +24,7 @@ class Note(models.Model):
             while Note.objects.filter(slug=slug).exists():
                 slug = f'{slug_base}-{get_random_string(5)}'
             self.slug = slug
-        super(Note, self).save(*args, **kwargs)
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return self.title
