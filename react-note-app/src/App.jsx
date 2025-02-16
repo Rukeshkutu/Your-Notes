@@ -6,9 +6,6 @@ import NoteCardContainer from './component/NoteCardContainer'
 const App = () => {
   return (
     <div>
-        {/*<BrowserRouter>
-            <NavBar />
-        </BrowserRouter>*/}
         <NavBar />
         <Filter />
         <NoteCardContainer />
