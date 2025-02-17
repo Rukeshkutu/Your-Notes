@@ -1,22 +1,14 @@
 import React from 'react'
-import { BrowserRouter } from 'react-router-dom'
+import { createBrowser, createBrowserRouter, createRoutesFromElements, Route, RouterProvider } from 'react-router-dom'
 import NavBar from './component/NavBar'
 import Filter from './component/Filter'
 import NoteCardContainer from './component/NoteCardContainer'
+import HomePage from './pages/HomePage'
 const App = () => {
-  return (
-    <div>
-        <NavBar />
-        <Filter />
-        <NoteCardContainer />
-
-        
-        <h1>Hello this is React</h1>
-        <div className="flex justify-center items-center h-screen bg-gray-100">
-            <h1 className="text-3xl font-bold text-blue-600">Hello, Tailwind CSS!</h1>
-        </div>
-    </div>
-  )
+  const router = createBrowserRouter(createRoutesFromElements(
+    <Route index element = {<HomePage />} />
+  ))
+  return <RouterProvider router={router} />
 }
 
 export default App
