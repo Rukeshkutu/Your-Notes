@@ -18,7 +18,7 @@ const NoteCard = ({color}) => {
                 <p className="note-inner-content text-muted" data-notecontent="Blandit tempus porttitor aasfs. Integer posuere erat a ante venenatis.">Blandit tempus porttitor aasfs. Integer posuere erat a ante venenatis.</p>
             </div>
             <div className="d-flex align-items-center">
-                <a href="/notes-detail">
+                <a href="/note-detail">
                 <span className="mr-1"><MdMarkunread style={{fontSize: "25px", cursor:"pointer", color: color}}/></span>
                 </a>
                 
