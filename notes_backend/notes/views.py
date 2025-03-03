@@ -12,7 +12,7 @@ def notes(request):
         notes = Note.objects.all().order_by('-created_at')
         serializer = NoteSerializer(notes, many = True)
         return Response({
-            'stauts': 'success',
+            'status': 'success',
             'count': notes.count(),
             'data':serializer.data
         })
@@ -22,7 +22,7 @@ def notes(request):
         if serializer.is_valid():
             serializer.save()
             return Response({
-                'stauts': 'success',
+                'status': 'success',
                 'data':serializer.data
             }, status = status.HTTP_201_CREATED)
         return Response(serializer.errors, status = status.HTTP_400_BAD_REQUEST)
@@ -46,15 +46,15 @@ def note_detail(request, slug):
             serializer.save()
             return Response({
                 'status': 'success',
-                'serializer': serializer.data
+                'data': serializer.data
             }, status=status.HTTP_200_OK)
         return Response({
-            'stuatus': 'error',
+            'status': 'error',
             'errors':serializer.errors
         }, status=status.HTTP_400_BAD_REQUEST)
     elif request.method == 'DELETE':
         note.delete()
         return Response({
             'status': 'success',
-            'message': 'Note delete successfully'
+            'message': 'Note deleted successfully'
         }, status=status.HTTP_204_NO_CONTENT)

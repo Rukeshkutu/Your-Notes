@@ -39,16 +39,20 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'notes.apps.NotesConfig',
     'rest_framework',
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    "corsheaders.middleware.CorsMiddleware",#
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
+
 ]
 
 ROOT_URLCONF = 'notes_backend.urls'
@@ -70,6 +74,13 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'notes_backend.wsgi.application'
+
+
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:5173",
+    "http://localhost:5173",
+    
+]
 
 
 # Database
