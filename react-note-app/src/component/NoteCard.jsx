@@ -14,7 +14,7 @@ const NoteCard = ({note, color}) => {
         day:'numeric'
     })
     const bodyPreview = note.body 
-        ? `${note.body.split(" ").slice(0, 20).join(" ")}${note.body.split("").length>20 ? '...' : ''}` 
+        ? `${note.body.split(" ").slice(0, 20).join(" ")}${note.body.split(" ").length>20 ? '...' : ''}` 
         : 'No Notes Found.';
     const category = note.category || "Uncategorized";
 
@@ -60,7 +60,7 @@ NoteCard.propTypes = {
     note: PropTypes.shape({
         id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
         title: PropTypes.string.isRequired,
-        content: PropTypes.string,
+        body: PropTypes.string,
         created_at:PropTypes.string.isRequired,
         category:PropTypes.string
     }).isRequired,

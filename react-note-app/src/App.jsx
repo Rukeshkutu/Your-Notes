@@ -11,19 +11,22 @@ import EditNotePage from './pages/EditNotePage'
 import axios from 'axios'
 import {TbError404Off} from 'react-icons/tb'
 import ErrorPage from './pages/ErrorPage'
+import NoteCard from './component/NoteCard'
 //import { Route, RouterProvider,createBrowserRouter, createRoutesFromElements } from 'react-router-dom'
-const api = axios.create({
-  baseURL: 'http://127.0.0.1:8000/',
-});
+//const api = axios.create({
+//  baseURL: 'http://127.0.0.1:8000/',
+//});
 
 const App = () => {
-  const[notes, setNotes] = useState([]);
-  const[loading, setLoading] = useState(true);
-  const[error, setError] = useState(null);
+  // const[notes, setNotes] = useState([]);
+  // const[loading, setLoading] = useState(true);
+  // const[error, setError] = useState(null);
 
-  const fetchNotes = async() => {
+  {/*const fetchNotes = async() => {
     try {
       const response = await api.get('/notes/');
+      console.log('API response:', response)
+      console.log('Response Data:', response.data)
       setNotes(response.data.data);
       console.log(response.data.data)
       setError(null);
@@ -33,12 +36,23 @@ const App = () => {
     } finally{
       setLoading(false);
     }
-  };
+  };*/}
 
-  useEffect(() =>{
-    fetchNotes();
+  // useEffect(() =>{
+  //   //fetchNotes();
+  //   axios.get('http://127.0.0.1:8000/notes/')
+  //   .then(res => {
+  //     console.log(res.data)
+  //     setNotes(res.data)
+  //     setLoading(false)
+  //   })
+  //   .catch((err) => {
+  //     console.error("Error fetching notes:", err);
+  //       setError("Failed to load notes");
+  //       setLoading(false);
+  //   })
 
-  }, []);
+  // }, []);
   /*useEffect(()=> {
     axios.get('http://127.0.0.1:8000/notes/')
     .then(res => {
@@ -49,14 +63,39 @@ const App = () => {
       console.log(err.message)
     })
   }, [])*/
+  // const[notes, setNotes] = useState([]);
+  //   const[loading, setLoading] = useState(true);
+  //   const[error, setError] = useState(null);
+  //   useEffect(() => {
+  //     axios.get('http://127.0.0.1:8000/notes/')
+  //       .then(res => {
+  //         console.log("📌 API Response:", res.data); // Debug API response
+    
+  //         if (res.data && Array.isArray(res.data.data)) {
+  //           setNotes(res.data.data);  // ✅ Extract only the `data` array
+  //         } else {
+  //           console.error("❌ Unexpected API response format:", res.data);
+  //           setNotes([]);  // ✅ Default to an empty array if incorrect format
+  //         }
+  //         setLoading(false);
+  //       })
+  //       .catch(err => {
+  //         console.error("❌ Error fetching notes:", err);
+  //         setError("Failed to load notes");
+  //         setLoading(false);
+  //       });
+  //   }, []);
 
 
   const router = createBrowserRouter(createRoutesFromElements(
   <Route path='/' element = {<MainLayout />} errorElement = {<ErrorPage />}>
-    <Route index element = {<HomePage notes = {notes} loading={loading} error = {error} />} />
-    <Route path='/add-note' element = {<AddNotesPage refreshNotes = {fetchNotes} />} /> {/* here the path must be same in the nav bar addnotes link */}
-    
-    <Route path='/notes/:slug' element = {<NoteDetailPage />} 
+   <Route 
+  index 
+  element={<HomePage />} 
+/>
+    <Route path='/add-note' element = {<AddNotesPage  />} /> {/* here the path must be same in the nav bar addnotes link */}
+    <Route path='/notes/:id' element = {<NoteCard /> } />
+    {/*<Route path='/notes/:slug' element = {<NoteDetailPage />} 
       loader = {async(params) => {
         try{
           const response = await api.get(`/notes/${params.slug}/`);
@@ -77,8 +116,8 @@ const App = () => {
           throw new Response('Not Found', {status:404});
         }
       }}
-    />
-  </Route>
+    /> */}
+  </Route> 
   ))
   return <RouterProvider router={router} />
 }
