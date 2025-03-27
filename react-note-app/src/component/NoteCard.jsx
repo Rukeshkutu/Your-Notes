@@ -11,7 +11,11 @@ const NoteCard = ({note, color}) => {
     const formattedDate = new Date(note.created_at).toLocaleDateString('en-US', {
         year:'numeric',
         month:'long',
-        day:'numeric'
+        day:'numeric',
+        hour: '2-digit',
+        minute:'2-digit',
+        second: '2-digit',
+        hour12: true
     })
     const bodyPreview = note.body 
         ? `${note.body.split(" ").slice(0, 20).join(" ")}${note.body.split(" ").length>20 ? '...' : ''}` 
@@ -28,9 +32,9 @@ const NoteCard = ({note, color}) => {
             </div> 
             
             {/*<a href='/note-detail' style={{textDecoration: "none", color: "black"}}>*/}
-            <Link to= {`/notes/${note.id}`} style={{ textDecoration: "none", color: "black" }}>
+            <Link to= {`/notes/${note.slug}`} style={{ textDecoration: "none", color: "black" }}>
                 <h5 className="note-title text-truncate fw-bold mb-2" title='{note.title}'> {note.title} </h5>
-                <p className="note-date font-12 text-muted small mb-2">{formattedDate}</p>
+                <p className="note-date font-12 text-muted small mb-2">{formattedDate} </p>
                 <div className="note-content">
                     <p className="note-inner-content text-muted mb-3" style={{minHeight:'60px'}} title={note.body}>{bodyPreview}</p>
                 </div>
@@ -41,7 +45,7 @@ const NoteCard = ({note, color}) => {
                 <div className='d-flex align-items-center gap-2'>
 
                 </div>
-                <Link to ={`/notes/${note.id}`} className='text-decoration-none' aria-label='View note details' >
+                <Link to ={`/notes/${note.slug}`} className='text-decoration-none' aria-label='View note details' >
                     <MdMarkunread style={{fontSize: "25px", cursor:"pointer", color: color}}/>
                 </Link>
                 

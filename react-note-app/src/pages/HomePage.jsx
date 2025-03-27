@@ -29,7 +29,7 @@ const HomePage = () => {
     
   console.log("📌 HomePage Received Notes:", notes);
 
-  if (loading)
+  if (loading){
     return (
       <div className='text-center py-5'>
         <div className='spinner-border text-primary' role='status'>
@@ -38,14 +38,16 @@ const HomePage = () => {
         <p className='mt-2'>Loading Notes...</p>
       </div>
     );
+  }
 
-  if (error)
+  if (error){
     return (
       <div className='alert alert-danger mx-3 mt-3' role='alert'>
         Error Loading Notes: {error}
       </div>
     );
-
+  }
+  
   return (
     <div className='container-fluid'>
       <div className='row'>

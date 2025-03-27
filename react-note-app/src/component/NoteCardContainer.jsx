@@ -14,8 +14,8 @@ const NoteCardContainer = ({notes}) => {
               </div>
             ) : (
               <div className=' row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-4'>
-                {notes.map((note) => (
-                  <div key ={note.id} className='col'>
+                {notes.map((note,index) => (
+                  <div key ={note?.id || index} className='col'>
                     <NoteCard
                       note={note}
                       color={getCategoryColor(note.category)}
@@ -40,18 +40,8 @@ const getCategoryColor = (category) => {
   };
   return colors[category] || '#6c757d';
 }
-{/*NoteCardContainer.propTypes = {
-  notes: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
-      title: PropTypes.string,
-      body: PropTypes.string,
-      category: PropTypes.string,
-      created_at: PropTypes.string,
-      
-    })
-  ).isRequired
-};*/}
+
+
 NoteCardContainer.propTypes = {
   notes: PropTypes.array.isRequired
 };
