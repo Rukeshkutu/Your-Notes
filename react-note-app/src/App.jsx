@@ -6,19 +6,18 @@ import AddNotesPage from './pages/AddNotesPage'
 import NoteDetailPage from './pages/NoteDetailPage'
 
 import ErrorPage from './pages/ErrorPage'
+import EditNotePage from './pages/EditNotePage'
 
 
 
 const App = () => {
   
   const router = createBrowserRouter(createRoutesFromElements(
-  <Route path='/' element = {<MainLayout />} errorElement = {<ErrorPage />}>
-   <Route 
-  index 
-  element={<HomePage />} 
-/>
+    <Route path='/' element = {<MainLayout />} errorElement = {<ErrorPage />}>
+    <Route index element={<HomePage />} />
     <Route path='/add-note' element = {<AddNotesPage  />} /> {/* here the path must be same in the nav bar addnotes link */}
     <Route path='/notes/:slug' element = {<NoteDetailPage /> } />
+    <Route path='/edit-note/:slug' element = {<EditNotePage /> } />
     
   </Route> 
   ))
