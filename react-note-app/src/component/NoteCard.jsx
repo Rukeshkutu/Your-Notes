@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 import PropTypes from 'prop-types'
 
 const NoteCard = ({note, color}) => {
-    console.log('notecard:', note);
+    //console.log('notecard:', note);
     const formattedDate = new Date(note.created_at).toLocaleDateString('en-US', {
         year:'numeric',
         month:'long',
@@ -17,7 +17,8 @@ const NoteCard = ({note, color}) => {
         second: '2-digit',
         hour12: true
     })
-    const bodyPreview = note.body 
+    //const bodyPreview = note.body 
+    const bodyPreview = typeof note.body === 'string'
         ? `${note.body.split(" ").slice(0, 20).join(" ")}${note.body.split(" ").length>20 ? '...' : ''}` 
         : 'No Notes Found.';
     const category = note.category || "Uncategorized";
@@ -63,8 +64,8 @@ const NoteCard = ({note, color}) => {
 NoteCard.propTypes = {
     note: PropTypes.shape({
         id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
-        title: PropTypes.string.isRequired,
-        body: PropTypes.string,
+        title: PropTypes.oneOfType([PropTypes.string], PropTypes.element).isRequired,
+        body: PropTypes.oneOfType([PropTypes.string], PropTypes.element),
         created_at:PropTypes.string.isRequired,
         category:PropTypes.string
     }).isRequired,

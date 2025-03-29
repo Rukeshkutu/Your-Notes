@@ -1,20 +1,24 @@
 import React, {useState} from 'react'
 
-const Filter = () => {
-  const [selectedFilter, setSelectedFilter] = useState('');
+const Filter = ({onCategoryChange}) => {
+  // const [filterNote, setFilterNote] = useState('')
+  // const handleFilterNote = (val) => {
+  //   setFilterNote(val)
+  // }
   return (
-    <div className='container' style={{width:'500px', margin:'20px auto'}} >
+    <div className='container' style={{width:'400px', margin:'20px auto'}} >
         <select
         className='form-select'
         aria-label='Default select example'
         style={{ height: '50px' }}
-        value={selectedFilter} // Controlled component
-        onChange={(e) => setSelectedFilter(e.target.value)} // Handle selection change
+        //value={filterNote} // Controlled component
+        onChange={(e) => onCategoryChange(e.target.value)} 
+        defaultValue=''// Handle selection change
       >
-            <option value=''>Filter Notes</option>
-            <option value="1">Business</option>
-            <option value="2">Personal</option>
-            <option value="3">Important</option>
+            <option value=''>All Notes</option>
+            <option value="BUSINESS">Business</option>
+            <option value="PERSONAL">Personal</option>
+            <option value="IMPORTANT">Important</option>
         </select>
     </div>
   )

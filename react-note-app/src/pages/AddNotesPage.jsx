@@ -22,7 +22,7 @@ const AddNotesPage = () => {
       body, 
       category
     };
-    console.log('sending data:' , newNote)
+    //console.log('sending data:' , newNote)
     axios.post('http://127.0.0.1:8000/notes/', newNote)
     .then(response => {
       if(response.status === 201){
@@ -32,7 +32,7 @@ const AddNotesPage = () => {
     })
     .catch(err => {
       setError(err.response?.data?.message || "Failed to create note.");
-      console.error("Error creating notes:", err);
+      //console.error("Error creating notes:", err);
     })
     .finally(() => {
       setLoading(false);

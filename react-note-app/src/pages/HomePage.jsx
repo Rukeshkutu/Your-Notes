@@ -1,33 +1,76 @@
-import React, {useEffect, useState} from 'react'
+import React, {useEffect, useMemo, useState} from 'react'
 import Filter from '../component/Filter'
 import NoteCardContainer from '../component/NoteCardContainer'
 import axios from 'axios'
+import { useSearchParams } from 'react-router-dom';
 
 const HomePage = () => {
-  const[notes, setNotes] = useState([]);
-    const[loading, setLoading] = useState(true);
-    const[error, setError] = useState(null);
-    useEffect(() => {
-      axios.get('http://127.0.0.1:8000/notes/')
-        .then(res => {
-          console.log("📌 API Response:", res.data); // Debug API response
+  const [searchParams] = useSearchParams();
+  const searchTerm = searchParams.get('search') || '';
+  const [notes, setNotes] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [filterNotes, setFilterNotes] = useState('');
+
+  useEffect(() => {
+    setLoading(true);
+    const url = searchTerm 
+      ? `http://127.0.0.1:8000/notes-search/?search=${searchTerm}`
+      : 'http://127.0.0.1:8000/notes/';
+
+    axios.get(url)
+      .then(response => {
+        const data = searchTerm ? response.data.results : response.data.data;
+        if (Array.isArray(data)) {
+          searchTerm ? setNotes(data) : setNotes(data);
+        }
+      })
+      .catch(err => {
+        console.error("Error fetching notes:", err);
+        setError(searchTerm ? 'Search failed' : 'Failed to load notes');
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  }, [searchTerm]);
+
+  const filteredNotes = filterNotes
+    ? notes.filter(note => note.category === filterNotes)
+    : notes;
+
+  // const[notes, setNotes] = useState([]);
+  // const[loading, setLoading] = useState(true);
+  // const[error, setError] = useState(null);
+  // const [filterNotes, setFilterNotes] = useState('')
+  // //const [searchResult, setSearchResults] = useState(null)
+  // //const[searchParams] = useSearchParams();
+  // //const searchTerm = searchParams.get('search') || '';
+
+  // const filteredNotes = filterNotes
+  //   ? notes.filter(note => note.category === filterNotes)
+  //   : notes;
+
+  //   useEffect(() => {
+  //         axios.get('http://127.0.0.1:8000/notes/')
+  //           .then(res => {
+  //            // console.log("📌 API Response:", res.data); // Debug API response
+        
+  //             if (res.data && Array.isArray(res.data.data)) {
+  //               setNotes(res.data.data);  // ✅ Extract only the `data` array
+  //             } else {
+  //               //console.error("❌ Unexpected API response format:", res.data);
+  //               setNotes([]);  // ✅ Default to an empty array if incorrect format
+  //             }
+  //             setLoading(false);
+  //           })
+  //           .catch(err => {
+  //             //console.error("❌ Error fetching notes:", err);
+  //             setError("Failed to load notes");
+  //             setLoading(false);
+  //           });
+  //       });  
     
-          if (res.data && Array.isArray(res.data.data)) {
-            setNotes(res.data.data);  // ✅ Extract only the `data` array
-          } else {
-            console.error("❌ Unexpected API response format:", res.data);
-            setNotes([]);  // ✅ Default to an empty array if incorrect format
-          }
-          setLoading(false);
-        })
-        .catch(err => {
-          console.error("❌ Error fetching notes:", err);
-          setError("Failed to load notes");
-          setLoading(false);
-        });
-    }, []);
-    
-  console.log("📌 HomePage Received Notes:", notes);
+  //console.log("📌 HomePage Received Notes:", notes);
 
   if (loading){
     return (
@@ -47,12 +90,12 @@ const HomePage = () => {
       </div>
     );
   }
-  
+
   return (
     <div className='container-fluid'>
       <div className='row'>
         <div className='col-md-3 col-lg-2'>
-          <Filter />
+          <Filter  onCategoryChange={setFilterNotes}/>
         </div>
         <div className='col-md-9 col-lg-10'>
           {!notes || notes.length === 0 ? (
@@ -61,7 +104,8 @@ const HomePage = () => {
               <p>Start by creating your first note!</p>
             </div>
           ) : (
-            <NoteCardContainer notes = {notes}/>
+            // <NoteCardContainer notes = {notes}/>
+            <NoteCardContainer notes={filteredNotes}/>
           )}
         </div>
       </div>

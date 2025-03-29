@@ -1,10 +1,36 @@
 //import { useState } from "react"
-import React from 'react'
+import axios from 'axios';
+import React, { useEffect, useState } from 'react'
 import { FaSquarePlus } from "react-icons/fa6";
-import {Link} from "react-router-dom"
+import {Form, Link, useNavigate} from "react-router-dom"
+import debounce from 'lodash.debounce'
 //import './index.css';
 
 const NavBar = () => {
+  const [searchTerm, setSearchTerm] = useState('');
+  const navigate = useNavigate();
+
+  // Debounce search input
+  const debouncedSearch = debounce((term) => {
+    if (term.length >= 3) {
+      navigate(`/?search=${encodeURIComponent(term)}`);
+    } else if (term === '') {
+      navigate('/');
+    }
+  }, 500);
+
+  useEffect(() => {
+    debouncedSearch(searchTerm);
+    return () => debouncedSearch.cancel();
+  }, [searchTerm]);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (searchTerm.length >= 3) {
+      navigate(`/?search=${encodeURIComponent(searchTerm)}`);
+    }
+  }
+
     return (
       <nav className="navbar bg-body-tertiary py-50" style={{ padding: "20px" }}>
         <div className="container d-flex justify-content-around">
@@ -13,6 +39,7 @@ const NavBar = () => {
           </Link>
           <div className="d-flex">
             <div
+              onSubmit={handleSubmit}
               className="input-group input-group-sm"
               style={{ width: "500px", height: "40px" }}
             >
@@ -21,11 +48,15 @@ const NavBar = () => {
                 type="search"
                 placeholder="Search"
                 aria-label="Search"
+                value = {searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
               />
               <button className="btn btn-outline-success" type="submit">
                 Search
               </button>
             </div>
+            
+            
             {/* <button className="btn btn-outline-primary btn-md" type="button">Add</button> */}
           </div>
   

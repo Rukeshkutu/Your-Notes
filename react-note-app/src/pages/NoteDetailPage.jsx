@@ -4,6 +4,8 @@ import { BiSolidTrashAlt } from "react-icons/bi"
 import { Link, useParams, useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import "./NoteDetailPage.css"
+import Model from "../component/Model"
+import { FaBullseye } from 'react-icons/fa6'
 
 const NoteDetailPage = () => {
   const { slug } = useParams()
@@ -11,11 +13,16 @@ const NoteDetailPage = () => {
   const [note, setNote] = useState(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
+  const [isOpen, setIsOpen] = useState(false)
+
+  const handleIsOpen = () => {
+    setIsOpen(!isOpen)
+  }
 
   useEffect(() => {
     axios.get(`http://127.0.0.1:8000/notes/${slug}`)
       .then(res => {
-        console.log("API response:", res.data.data)
+        //console.log("API response:", res.data.data)
         if (res.data && res.data.data) {
           setNote(res.data.data)
         } else {
@@ -24,7 +31,7 @@ const NoteDetailPage = () => {
         setLoading(false)
       })
       .catch(err => {
-        console.error("Error fetching note:", err)
+        //console.error("Error fetching note:", err)
         setError("Failed to load note. It might not exist.")
         setLoading(false)
         
@@ -81,11 +88,12 @@ const NoteDetailPage = () => {
                 <FiEdit /><span>Edit</span>
               </button>
             </Link>
-            <button className="btn btn-danger">
+            <button className="btn btn-danger" onClick={handleIsOpen}>
               <BiSolidTrashAlt /><span>Delete</span>
             </button>
           </span>
           <p className="description">{note.body}</p>
+          {isOpen && <Model handleIsOpen = {handleIsOpen}/>}
         </>
       ) : (
         <p className="text-center">No note data available</p>

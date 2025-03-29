@@ -23,7 +23,7 @@ const EditNotePage = () => {
         setCategory(note.category)
       } catch(err){
         setError('Fail to load note')
-        console.error('Error fetching note:', err)
+        //console.error('Error fetching note:', err)
       }
     }
     fetchNote()
@@ -39,7 +39,7 @@ const EditNotePage = () => {
       body, 
       category
     };
-    console.log('sending data:' , updatedNote)
+    //console.log('sending data:' , updatedNote)
     axios.put(`http://127.0.0.1:8000/notes/${slug}`, updatedNote)
     .then(response => {
       if(response.status === 200){
@@ -47,7 +47,7 @@ const EditNotePage = () => {
       }
     })
     .catch(err => {
-      console.error("Detailed error:", err.response?.data)
+      //console.error("Detailed error:", err.response?.data)
       setError(err.response?.data?.message || "Failed to create note.");
       
     })

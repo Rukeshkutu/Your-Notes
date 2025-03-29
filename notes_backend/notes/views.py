@@ -4,7 +4,50 @@ from .models import Note
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from rest_framework import status
+from django.db.models import Q
 # Create your views here.
+
+
+@api_view(['GET'])
+def search_notes(request):
+    query = request.query_params.get('search', '').strip()
+    if not query:
+        return Response({'error': 'Search query required'}, status=400)
+    
+    notes = Note.objects.filter(
+        Q(title__icontains=query) |
+        Q(body__icontains=query) |
+        Q(category__iexact=query)
+    )
+    serializer = NoteSerializer(notes, many=True)
+    return Response({'results': serializer.data})
+    # query = request.query_params.get('search', '').strip()
+    
+    # # Validate query parameter
+    # if not query:
+    #     return Response(
+    #         {'error': 'Search query parameter is required'},
+    #         status=status.HTTP_400_BAD_REQUEST
+    #     )
+    
+    # try:
+    #     notes = Note.objects.filter(
+    #         Q(title__icontains=query) |
+    #         Q(body__icontains=query) |
+    #         Q(category__iexact=query)  # Use iexact for exact category match
+    #     )
+    #     serializer = NoteSerializer(notes, many=True)
+    #     return Response({
+    #         'count': notes.count(),
+    #         'results': serializer.data
+    #     }, status=status.HTTP_200_OK)
+        
+    # except Exception as e:
+    #     return Response(
+    #         {'error': str(e)},
+    #         status=status.HTTP_500_INTERNAL_SERVER_ERROR
+    #     )
+
 
 @api_view(["GET", "POST"])
 def notes(request):
@@ -26,6 +69,7 @@ def notes(request):
                 'data':serializer.data
             }, status = status.HTTP_201_CREATED)
         return Response(serializer.errors, status = status.HTTP_400_BAD_REQUEST)
+
 
 @api_view(['GET', 'PUT', 'DELETE'])
 def note_detail(request, slug):
