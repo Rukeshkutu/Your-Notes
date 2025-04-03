@@ -92,24 +92,34 @@ const HomePage = () => {
   }
 
   return (
-    <div className='container-fluid'>
-      <div className='row'>
-        <div className='col-md-3 col-lg-2'>
-          <Filter  onCategoryChange={setFilterNotes}/>
-        </div>
-        <div className='col-md-9 col-lg-10'>
-          {!notes || notes.length === 0 ? (
-            <div className='text-center py-5'>
-              <h4>No notes found.</h4>
-              <p>Start by creating your first note!</p>
-            </div>
-          ) : (
-            // <NoteCardContainer notes = {notes}/>
-            <NoteCardContainer notes={filteredNotes}/>
-          )}
-        </div>
-      </div>
-    </div>
+    <>
+      {!notes || notes.length === 0 ? (
+        <h4 style={{ textAlign: "center", marginTop: "10px" }}>
+          There is no note found.
+        </h4>
+      ) : (
+        <Filter onCategoryChange={setFilterNotes} />
+      )}
+      <NoteCardContainer notes={filteredNotes} />
+    </>
+    // <div className='container'>
+    //   <div className='row'>
+    //     <div className='col-md-3 col-lg-2'>
+    //       <Filter  onCategoryChange={setFilterNotes}/>
+    //     </div>
+    //     <div className='col-md-9 col-lg-10'>
+    //       {!notes || notes.length === 0 ? (
+    //         <div className='text-center py-5'>
+    //           <h4>No notes found.</h4>
+    //           <p>Start by creating your first note!</p>
+    //         </div>
+    //       ) : (
+    //         // <NoteCardContainer notes = {notes}/>
+    //         <NoteCardContainer notes={filteredNotes}/>
+    //       )}
+    //     </div>
+    //   </div>
+    // </div>
   );
 };
 

@@ -6,7 +6,7 @@ const Filter = ({onCategoryChange}) => {
   //   setFilterNote(val)
   // }
   return (
-    <div className='container' style={{width:'400px', margin:'20px auto'}} >
+    <div className='container' d-flex style={{width:'400px', margin:'20px auto'}} >
         <select
         className='form-select'
         aria-label='Default select example'

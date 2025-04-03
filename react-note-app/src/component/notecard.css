@@ -1,0 +1,36 @@
+.note-has-grid .col {
+    display: flex;
+  }
+  
+  /* Force card content alignment */
+  .card-body {
+    padding: 1.25rem;
+  }
+  
+  .note-inner-content {
+    line-height: 1.7;
+  }
+  
+  /* Fix flex column layout */
+  .flex-grow-1 {
+    flex: 1 1 auto !important;
+  }
+
+  .single-note-item {
+    min-height: 280px;
+  }
+  
+  .card-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  
+  .note-inner-content {
+    line-height: 1.5;
+    min-height: 72px;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
